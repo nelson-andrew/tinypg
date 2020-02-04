@@ -41,11 +41,11 @@ export class TinyPg {
       const enable_ssl = _.get(params.query, 'sslmode') !== 'disable'
 
       const pool_config: Pg.PoolConfig & { log: any } = {
-         user: user,
-         password: password,
-         host: params.hostname,
-         port: port,
-         database: database,
+         user: _.isNil(pool_options.user) ? user : pool_options.user,
+         password: _.isNil(pool_options.password) ? password : pool_options.password,
+         host: _.isNil(pool_options.host) ? params.hostname : pool_options.host,
+         port: _.isNil(pool_options.port) ? port : pool_options.port,
+         database: _.isNil(pool_options.database) ? database : pool_options.database,
          ssl: enable_ssl ? _.defaultTo(options.tls_options, true) : false,
          keepAlive: pool_options.keep_alive,
          connectionTimeoutMillis: pool_options.connection_timeout_ms,
